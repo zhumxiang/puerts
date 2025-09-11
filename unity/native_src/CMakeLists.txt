@@ -569,7 +569,7 @@ elseif ( ANDROID )
     #        COMMAND "${ANDROID_TOOLCHAIN_PREFIX}strip" -g -S -d --strip-debug --verbose
     #        "${CMAKE_BINARY_DIR}/libpuerts.so"
     #        COMMENT "Strip debug symbols done on final binary.")
-
+	target_link_options(puerts PRIVATE -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384) # android 16K Pagesize
 elseif ( APPLE )
 
     if ( IOS )
