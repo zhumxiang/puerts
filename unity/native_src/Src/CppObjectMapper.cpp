@@ -425,6 +425,11 @@ void* FCppObjectMapper::GetPrivateData(v8::Local<v8::Context> Context, v8::Local
 #else
     auto Key = FV8Utils::InternalString(Context->GetIsolate(), QJS_PRIVATE_KEY_STR);
 #endif
+    auto hasOwn = JSObject->HasOwnProperty(Context, Key);
+    if (hasOwn.IsNothing() || !hasOwn.FromJust())
+    {
+        return nullptr;
+    }
     v8::MaybeLocal<v8::Value> maybeValue = JSObject->Get(Context, Key);
     if (maybeValue.IsEmpty())
     {
